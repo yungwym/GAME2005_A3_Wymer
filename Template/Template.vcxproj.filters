@@ -135,6 +135,9 @@
     <ClCompile Include="..\src\Sim2Scene.cpp">
       <Filter>Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\InstructScene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -279,6 +282,9 @@
       <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Sim2Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\InstructScene.h">
       <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -33,12 +33,11 @@ private:
 
 	glm::vec2 m_mousePosition;
 
-	Crate* m_pCrate;
-	Triangle* m_pTriangle;
-
+	
 	bool m_playerFacingRight;
 
 	// UI Items
+	Button* m_pReturnButton;
 	Label* m_pInstructionsLabel;
 
 };

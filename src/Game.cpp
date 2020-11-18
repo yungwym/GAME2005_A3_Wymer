@@ -163,7 +163,7 @@ void Game::changeSceneState(const SceneState new_state)
 			std::cout << "Simulation 2 scene activated" << std::endl;
 			break;
 		case INSTRUCT_SCENE:
-			//m_currentScene = new PlayScene();
+			m_currentScene = new InstructScene();
 			std::cout << "Instruction scene activated" << std::endl;
 			break;
 		case END_SCENE:

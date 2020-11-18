@@ -126,87 +126,52 @@ void Sim2Scene::start()
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 
-	// Player Sprite
-	m_pCrate = new Crate();
-	addChild(m_pCrate);
-
-	m_pCrate->setTheta(300.0f, 400.0f);
-
-	//Enemy Sprite
-	m_pTriangle = new Triangle();
-	addChild(m_pTriangle);
 
 	/* Instructions Label */
-	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas");
-	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 505.0f);
+	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas", 10.0f);
+	m_pInstructionsLabel->getTransform()->position = glm::vec2(Config::SCREEN_WIDTH * 0.5f, 587.5f);
 
 	addChild(m_pInstructionsLabel);
+
+	//Return Button
+	m_pReturnButton = new Button("../Assets/textures/ReturnSimButton.png", "ReturnSimButton", RETURN_BUTTON);
+	m_pReturnButton->getTransform()->position = glm::vec2(680.0f, 60.0f);
+
+	m_pReturnButton->addEventListener(CLICK, [&]()-> void
+		{
+			m_pReturnButton->setActive(false);
+			TheGame::Instance()->changeSceneState(START_SCENE);
+		});
+
+	m_pReturnButton->addEventListener(MOUSE_OVER, [&]()->void
+		{
+			m_pReturnButton->setAlpha(128);
+		});
+
+	m_pReturnButton->addEventListener(MOUSE_OUT, [&]()->void
+		{
+			m_pReturnButton->setAlpha(255);
+		});
+	addChild(m_pReturnButton);
 }
 
 void Sim2Scene::GUI_Function() const
 {
-	//Variables
-	static int xTriPos = 190;
-	static int triHeight = 300;
-	static int triWidth = 400;
-	static int friction = 42;
-	static int mass = 13;
-
-	glm::vec2 lineAStart = glm::vec2(xTriPos, 410);
-	glm::vec2 lineAEnd = glm::vec2(xTriPos, triHeight);
-
 	// Always open with a NewFrame
 	ImGui::NewFrame();
 
 	// See examples by uncommenting the following - also look at imgui_demo.cpp in the IMGUI filter
 	//ImGui::ShowDemoWindow();
 
-	ImGui::Begin("Game Physics - Assignment 2", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
+	ImGui::Begin("Game Physics - Assignment 3: Collision Response", NULL, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_MenuBar);
 
 
-	if (ImGui::Button("Drop Crate"))
+	if (ImGui::Button("Activate Simulation"))
 	{
-		m_pCrate->dropCrate(triHeight, triWidth);
+		
 	}
 
-	ImGui::Separator();
-
-	if (ImGui::SliderInt("Triangle Position X", &xTriPos, 45, 590))
-	{
-		m_pTriangle->getTransform()->position.x = xTriPos;
-		m_pTriangle->setLineA(triHeight);
-		m_pTriangle->setLineB(triWidth);
-		m_pCrate->getTransform()->position.x = xTriPos + 15.0f;
-		m_pCrate->setTheta(triHeight, triWidth);
-	}
-
-	if (ImGui::SliderInt("Triangle Height", &triHeight, 150, 350))
-	{
-		m_pTriangle->setLineA(triHeight);
-		m_pCrate->getTransform()->position.y = (482.5f - triHeight) - 47.0f;
-		m_pCrate->setTheta(triHeight, triWidth);
-	}
-
-
-	if (ImGui::SliderInt("Triangle Width", &triWidth, 10, 700))
-	{
-		m_pTriangle->setLineB(triWidth);
-		m_pCrate->setTheta(triHeight, triWidth);
-	}
-
-	ImGui::Separator();
-
-	if (ImGui::SliderInt("Mass of Crate", &mass, 1, 100))
-	{
-		m_pCrate->setMass(mass);
-	}
-
-	if (ImGui::SliderInt("Coefficient of Friction", &friction, 1, 100))
-	{
-		m_pCrate->setFriction(friction);
-	}
-
-
+	
 
 	ImGui::End();
 

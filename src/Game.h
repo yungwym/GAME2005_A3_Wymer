@@ -17,6 +17,7 @@
 #include "StartScene.h"
 #include "Sim1Scene.h"
 #include "Sim2Scene.h"
+#include "InstructScene.h"
 #include "EndScene.h"
 
 #include "Config.h"
