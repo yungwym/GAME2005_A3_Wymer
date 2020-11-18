@@ -1,4 +1,4 @@
-#include "PlayScene.h"
+#include "Sim1Scene.h"
 #include "Game.h"
 #include "EventManager.h"
 #include "Util.h"
@@ -8,18 +8,17 @@
 #include "imgui_sdl.h"
 #include "Renderer.h"
 
-PlayScene::PlayScene()
+Sim1Scene::Sim1Scene()
 {
-	PlayScene::start();
-
+	Sim1Scene::start();
 }
 
-PlayScene::~PlayScene()
+Sim1Scene::~Sim1Scene()
 = default;
 
-void PlayScene::draw()
+void Sim1Scene::draw()
 {
-	TextureManager::Instance()->draw("PlayScreen", 400, 300, 0, 255, true);
+	TextureManager::Instance()->draw("Sim1Screen", 400, 300, 0, 255, true);
 
 	drawDisplayList();
 	SDL_SetRenderDrawColor(Renderer::Instance()->getRenderer(), 255, 255, 255, 255);
@@ -30,17 +29,17 @@ void PlayScene::draw()
 	}
 }
 
-void PlayScene::update()
+void Sim1Scene::update()
 {
 	updateDisplayList();
 }
 
-void PlayScene::clean()
+void Sim1Scene::clean()
 {
 	removeAllChildren();
 }
 
-void PlayScene::handleEvents()
+void Sim1Scene::handleEvents()
 {
 	EventManager::Instance().update();
 
@@ -118,11 +117,11 @@ void PlayScene::handleEvents()
 	}
 }
 
-void PlayScene::start()
+void Sim1Scene::start()
 {
 
 	//Load Background and Textures 
-	TextureManager::Instance()->load("../Assets/textures/PlayScreen_F.png", "PlayScreen");
+	TextureManager::Instance()->load("../Assets/textures/Sim1_Background.png", "Sim1Screen");
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
@@ -144,7 +143,7 @@ void PlayScene::start()
 	addChild(m_pInstructionsLabel);
 }
 
-void PlayScene::GUI_Function() const
+void Sim1Scene::GUI_Function() const
 {
 	//Variables
 	static int xTriPos = 190;

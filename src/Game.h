@@ -15,7 +15,8 @@
 
 // Scenes
 #include "StartScene.h"
-#include "PlayScene.h"
+#include "Sim1Scene.h"
+#include "Sim2Scene.h"
 #include "EndScene.h"
 
 #include "Config.h"
@@ -72,5 +73,5 @@ private:
 
 typedef Game TheGame;
 
-#endif /* defined (__GAME__) */
+#endif /* defined (__GAME__) *///
 

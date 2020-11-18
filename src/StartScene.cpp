@@ -42,7 +42,7 @@ void StartScene::handleEvents()
 
 	if(EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
 	{
-		TheGame::Instance()->changeSceneState(PLAY_SCENE);
+		TheGame::Instance()->changeSceneState(SIM1_SCENE);
 	}
 }
 
@@ -53,26 +53,48 @@ void StartScene::start()
 
 	const SDL_Color blue = { 0, 0, 255, 255 };
 	
-	// Start Button
-	m_pStartButton = new Button();
-	m_pStartButton->getTransform()->position = glm::vec2(400.0f, 275.0f); 
+	// Sim 1 Button
+	m_pSim1Button = new Button("../Assets/textures/Sim1Button.png", "Sim1Button", START_BUTTON);
+	m_pSim1Button->getTransform()->position = glm::vec2(250.0f, 240.0f); 
 
-	m_pStartButton->addEventListener(CLICK, [&]()-> void
+	m_pSim1Button->addEventListener(CLICK, [&]()-> void
 	{
-		m_pStartButton->setActive(false);
-		TheGame::Instance()->changeSceneState(PLAY_SCENE);
+		m_pSim1Button->setActive(false);
+		TheGame::Instance()->changeSceneState(SIM1_SCENE);
 	});
 	
-	m_pStartButton->addEventListener(MOUSE_OVER, [&]()->void
+	m_pSim1Button->addEventListener(MOUSE_OVER, [&]()->void
 	{
-		m_pStartButton->setAlpha(128);
+		m_pSim1Button->setAlpha(128);
 	});
 
-	m_pStartButton->addEventListener(MOUSE_OUT, [&]()->void
+	m_pSim1Button->addEventListener(MOUSE_OUT, [&]()->void
 	{
-		m_pStartButton->setAlpha(255);
+		m_pSim1Button->setAlpha(255);
 	});
-	addChild(m_pStartButton);
+	addChild(m_pSim1Button);
+
+	//Sim2 Button
+	m_pSim2Button = new Button("../Assets/textures/Sim2Button.png", "Sim2Button", START_BUTTON);
+	m_pSim2Button->getTransform()->position = glm::vec2(550.0f, 240.0f);
+
+	m_pSim2Button->addEventListener(CLICK, [&]()-> void
+		{
+			m_pSim2Button->setActive(false);
+			TheGame::Instance()->changeSceneState(SIM2_SCENE);
+		});
+
+	m_pSim2Button->addEventListener(MOUSE_OVER, [&]()->void
+		{
+			m_pSim2Button->setAlpha(128);
+		});
+
+	m_pSim2Button->addEventListener(MOUSE_OUT, [&]()->void
+		{
+			m_pSim2Button->setAlpha(255);
+		});
+	addChild(m_pSim2Button);
+
 
 	//Instructions Button
 	m_pInstructButton = new Button("../Assets/textures/InstructionsButton.png", "InstructionButton", INSTRUCT_BUTTON);
@@ -81,7 +103,7 @@ void StartScene::start()
 	m_pInstructButton->addEventListener(CLICK, [&]()-> void
 		{
 			m_pInstructButton->setActive(false);
-			TheGame::Instance()->changeSceneState(PLAY_SCENE);
+			TheGame::Instance()->changeSceneState(INSTRUCT_SCENE);
 		});
 
 	m_pInstructButton->addEventListener(MOUSE_OVER, [&]()->void

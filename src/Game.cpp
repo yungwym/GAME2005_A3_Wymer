@@ -154,9 +154,17 @@ void Game::changeSceneState(const SceneState new_state)
 			m_currentScene = new StartScene();
 			std::cout << "start scene activated" << std::endl;
 			break;
-		case PLAY_SCENE:
-			m_currentScene = new PlayScene();
-			std::cout << "play scene activated" << std::endl;
+		case SIM1_SCENE:
+			m_currentScene = new Sim1Scene();
+			std::cout << "Simulation 1 scene activated" << std::endl;
+			break;
+		case SIM2_SCENE:
+			m_currentScene = new Sim2Scene();
+			std::cout << "Simulation 2 scene activated" << std::endl;
+			break;
+		case INSTRUCT_SCENE:
+			//m_currentScene = new PlayScene();
+			std::cout << "Instruction scene activated" << std::endl;
 			break;
 		case END_SCENE:
 			m_currentScene = new EndScene();

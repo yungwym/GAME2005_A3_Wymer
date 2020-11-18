@@ -51,9 +51,6 @@
     <ClCompile Include="..\src\TextureManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\PlayScene.cpp">
-      <Filter>Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Button.cpp">
       <Filter>UI Objects</Filter>
     </ClCompile>
@@ -132,6 +129,12 @@
     <ClCompile Include="..\src\Crate.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\Sim1Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Sim2Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\StartScene.h">
@@ -172,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="..\src\Event.h">
       <Filter>Enums</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\PlayScene.h">
-      <Filter>Scenes</Filter>
     </ClInclude>
     <ClInclude Include="..\src\Button.h">
       <Filter>UI Objects</Filter>
@@ -274,6 +274,12 @@
     </ClInclude>
     <ClInclude Include="..\src\Crate.h">
       <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Sim1Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Sim2Scene.h">
+      <Filter>Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __PLAY_SCENE__
-#define __PLAY_SCENE__
+#ifndef __SIM1_SCENE__
+#define __SIM1_SCENE__
 
 #include "Scene.h"
 #include "Button.h"
@@ -10,11 +10,11 @@
 #include "Crate.h"
 #include "Triangle.h"
 
-class PlayScene : public Scene
+class Sim1Scene : public Scene
 {
 public:
-	PlayScene();
-	~PlayScene();
+	Sim1Scene();
+	~Sim1Scene();
 
 	// Scene LifeCycle Functions
 	virtual void draw() override;
@@ -43,4 +43,4 @@ private:
 
 };
 
-#endif /* defined (__PLAY_SCENE__) */
+#endif /* defined (__SIM1_SCENE__) */

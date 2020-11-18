@@ -26,7 +26,8 @@ private:
 
 	Ship* m_pShip{};
 
-	Button* m_pStartButton;
+	Button* m_pSim1Button;
+	Button* m_pSim2Button;
 	Button* m_pInstructButton;
 };
 
