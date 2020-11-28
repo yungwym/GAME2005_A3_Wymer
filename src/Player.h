@@ -16,13 +16,17 @@ public:
 	virtual void update() override;
 	virtual void clean() override;
 
-	// setters
-	void setAnimationState(PlayerAnimationState new_state);
+	void moveLeft();
+	void moveRight();
+	void moveUp();
+	void moveDown();
+
+	void stopMovement();
 
 private:
-	void m_buildAnimations();
 
-	PlayerAnimationState m_currentAnimationState;
+	const float SPEED = 150.0f;
+
 };
 
 #endif /* defined (__PLAYER__) */

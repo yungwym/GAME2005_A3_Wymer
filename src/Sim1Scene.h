@@ -7,8 +7,9 @@
 #include "Label.h"
 
 //Game Objects
-#include "Crate.h"
-#include "Triangle.h"
+#include "Projectile.h"
+#include "ObjectPool.h"
+#include "Player.h"
 
 class Sim1Scene : public Scene
 {
@@ -25,6 +26,8 @@ public:
 
 	void handleCollisions();
 
+	void SpawnProjectile();
+
 private:
 	// IMGUI Function
 	void GUI_Function() const;
@@ -35,9 +38,20 @@ private:
 
 	bool m_playerFacingRight;
 
+	//GameObjects 
+	//ProjectileManager* m_pProjectileManager;
+	ObjectPool* m_pObjectPool;
+	Player* m_pPlayer;
+
 	// UI Items
 	Button* m_pReturnButton;
 	Label* m_pInstructionsLabel;
+
+
+	const float projectileSpawnTimerDuration = 3000.0f;
+	float projectileSpawnTimerStart;
+
+
 };
 
 #endif /* defined (__SIM1_SCENE__) */

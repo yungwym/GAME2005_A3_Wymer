@@ -1,11 +1,11 @@
 #include "Player.h"
 #include "TextureManager.h"
 
-Player::Player(): m_currentAnimationState(PLAYER_IDLE_RIGHT)
+Player::Player()
 {
 	TextureManager::Instance()->load("../Assets/textures/wookie.png", "Wookie");
 
-	getTransform()->position = glm::vec2(100.0f, 400.0f);
+	getTransform()->position = glm::vec2(400.0f, 500.0f);
 	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->isColliding = false;
@@ -29,36 +29,36 @@ void Player::draw()
 
 void Player::update()
 {
+	const float deltaTime = 1.0f / 60.f;
+
+	glm::vec2 pos = getTransform()->position;
+	pos.x += getRigidBody()->velocity.x * deltaTime;
+	pos.y += getRigidBody()->velocity.y * deltaTime;
+
+	getTransform()->position = pos;
 }
 
 void Player::clean()
 {
+
 }
 
-void Player::setAnimationState(const PlayerAnimationState new_state)
-{
-	m_currentAnimationState = new_state;
+void Player::moveLeft() {
+	getRigidBody()->velocity = glm::vec2(-SPEED, 0.0f);
 }
 
-void Player::m_buildAnimations()
-{
-	Animation idleAnimation = Animation();
+void Player::moveRight() {
+	getRigidBody()->velocity = glm::vec2(SPEED, 0.0f);
+}
 
-	idleAnimation.name = "idle";
-	idleAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-idle-0"));
-	idleAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-idle-1"));
-	idleAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-idle-2"));
-	idleAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-idle-3"));
+void Player::moveUp() {
+	getRigidBody()->velocity = glm::vec2(0.0f, -SPEED);
+}
 
-	setAnimation(idleAnimation);
+void Player::moveDown() {
+	getRigidBody()->velocity = glm::vec2(0.0f, SPEED);
+}
 
-	Animation runAnimation = Animation();
-
-	runAnimation.name = "run";
-	runAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-run-0"));
-	runAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-run-1"));
-	runAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-run-2"));
-	runAnimation.frames.push_back(getSpriteSheet()->getFrame("megaman-run-3"));
-
-	setAnimation(runAnimation);
+void Player::stopMovement() {
+	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 }

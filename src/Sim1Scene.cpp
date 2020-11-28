@@ -32,6 +32,33 @@ void Sim1Scene::draw()
 void Sim1Scene::update()
 {
 	updateDisplayList();
+
+	if (SDL_GetTicks() - projectileSpawnTimerStart >= projectileSpawnTimerDuration)
+	{
+		SpawnProjectile();
+	}
+
+	std::vector<Projectile*>& allProjs = m_pObjectPool->allProjectiles;
+
+	for (auto bomb : allProjs)
+	{
+		if (CollisionManager::AABBCheck(m_pPlayer, bomb))
+		{
+			std::cout << "Collision" << std::endl;
+			m_pObjectPool->Despawn(bomb);
+		}
+	}
+
+	for (std::vector<Projectile*>::iterator iter = allProjs.begin(); iter != allProjs.end(); ++iter)
+	{
+		Projectile* proj = *iter;
+
+		if (proj->active && proj->getTransform()->position.y >= 650)
+		{
+			m_pObjectPool->Despawn(proj);
+			break;
+		}
+	}
 }
 
 void Sim1Scene::clean()
@@ -51,52 +78,37 @@ void Sim1Scene::handleEvents()
 			const auto deadZone = 10000;
 			if (EventManager::Instance().getGameController(0)->LEFT_STICK_X > deadZone)
 			{
-				//m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
-				m_playerFacingRight = true;
+				
 			}
 			else if (EventManager::Instance().getGameController(0)->LEFT_STICK_X < -deadZone)
 			{
-			//	m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
-				m_playerFacingRight = false;
-			}
-			else
-			{
-				if (m_playerFacingRight)
-				{
-					//m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
-				}
-				else
-				{
-					//m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
-				}
+			
 			}
 		}
 	}
-
 
 	// handle player movement if no Game Controllers found
 	if (SDL_NumJoysticks() < 1)
 	{
 		if (EventManager::Instance().isKeyDown(SDL_SCANCODE_A))
 		{
-		//	m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
-			m_playerFacingRight = false;
+			m_pPlayer->moveLeft();
 		}
 		else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_D))
 		{
-			//m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
-			m_playerFacingRight = true;
+			m_pPlayer->moveRight();
+		}
+		else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_W))
+		{
+			m_pPlayer->moveUp();
+		}
+		else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_S)) 
+		{
+			m_pPlayer->moveDown();
 		}
 		else
 		{
-			if (m_playerFacingRight)
-			{
-				//m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
-			}
-			else
-			{
-				//m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
-			}
+			m_pPlayer->stopMovement();
 		}
 	}
 	
@@ -121,10 +133,25 @@ void Sim1Scene::start()
 	//Load Background and Textures 
 	TextureManager::Instance()->load("../Assets/textures/Sim1_Background.png", "Sim1Screen");
 
+	SoundManager::Instance().load("../Assets/audio/thunder.ogg", "thunder", SOUND_SFX);
+
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
 	
 	// Player Sprite
+	m_pPlayer = new Player();
+	addChild(m_pPlayer);
+
+	//Object Pool
+	m_pObjectPool = new ObjectPool(10);
+
+	for (std::vector<Projectile*>::iterator iter = m_pObjectPool->allProjectiles.begin(); iter != m_pObjectPool->allProjectiles.end(); ++iter)
+	{
+		Projectile* proj = *iter;
+		addChild(proj);
+	}
+
+	projectileSpawnTimerStart = SDL_GetTicks();
 
 	/* Instructions Label */
 	m_pInstructionsLabel = new Label("Press the backtick (`) character to toggle Debug View", "Consolas", 10.0f);
@@ -154,6 +181,20 @@ void Sim1Scene::start()
 	addChild(m_pReturnButton);
 }
 
+void Sim1Scene::SpawnProjectile()
+{
+	Projectile* proj = m_pObjectPool->Spawn();
+	if (proj)
+	{
+		proj->getTransform()->position = glm::vec2(50 + rand() % 700, 130);
+	}
+
+	projectileSpawnTimerStart = SDL_GetTicks();
+}
+
+
+
+
 void Sim1Scene::GUI_Function() const
 {
 	// Always open with a NewFrame
@@ -167,7 +208,7 @@ void Sim1Scene::GUI_Function() const
 	
 	if(ImGui::Button("Activate Simulation"))
 	{
-		//m_pCrate->dropCrate(triHeight, triWidth);
+		
 	}
 
 	ImGui::Separator();
@@ -180,4 +221,12 @@ void Sim1Scene::GUI_Function() const
 	ImGui::Render();
 	ImGuiSDL::Render(ImGui::GetDrawData());
 	ImGui::StyleColorsDark();
+
+
+
+
+
 }
+
+
+
