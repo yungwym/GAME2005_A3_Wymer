@@ -32,6 +32,28 @@ void Sim2Scene::draw()
 void Sim2Scene::update()
 {
 	updateDisplayList();
+
+
+	if (CollisionManager::circleAABBCheck(m_pBall, m_pBrick))
+	{
+		std::cout << "Collision With Brick" << std::endl;
+
+		//Change directions 
+		m_pBall->getRigidBody()->velocity = -(m_pBall->getRigidBody()->velocity) * 0.8f;
+		m_pBall->getTransform()->position += m_pBall->getRigidBody()->velocity * deltaTime;
+	}
+
+	for (auto border : borders)
+	{
+		if (CollisionManager::circleAABBCheck(m_pBall, border))
+		{
+
+			std::cout << "COLLISION WITH BORDER" << std::endl;
+
+			m_pBall->getRigidBody()->velocity = -(m_pBall->getRigidBody()->velocity) * 0.8f;
+			m_pBall->getTransform()->position += m_pBall->getRigidBody()->velocity * deltaTime;
+		}
+	}
 }
 
 void Sim2Scene::clean()
@@ -51,24 +73,11 @@ void Sim2Scene::handleEvents()
 			const auto deadZone = 10000;
 			if (EventManager::Instance().getGameController(0)->LEFT_STICK_X > deadZone)
 			{
-				//m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
-				m_playerFacingRight = true;
+				
 			}
 			else if (EventManager::Instance().getGameController(0)->LEFT_STICK_X < -deadZone)
 			{
-				//	m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
-				m_playerFacingRight = false;
-			}
-			else
-			{
-				if (m_playerFacingRight)
-				{
-					//m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
-				}
-				else
-				{
-					//m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
-				}
+			
 			}
 		}
 	}
@@ -79,27 +88,25 @@ void Sim2Scene::handleEvents()
 	{
 		if (EventManager::Instance().isKeyDown(SDL_SCANCODE_A))
 		{
-			//	m_pPlayer->setAnimationState(PLAYER_RUN_LEFT);
-			m_playerFacingRight = false;
+			if (m_pBrick->getTransform()->position.x > 150)
+			{
+				std::cout << m_pBrick->getTransform()->position.x << std::endl;
+
+				m_pBrick->moveLeft();
+			}
 		}
 		else if (EventManager::Instance().isKeyDown(SDL_SCANCODE_D))
 		{
-			//m_pPlayer->setAnimationState(PLAYER_RUN_RIGHT);
-			m_playerFacingRight = true;
+			if (m_pBrick->getTransform()->position.x < 650)
+			{
+				m_pBrick->moveRight();
+			}
 		}
 		else
 		{
-			if (m_playerFacingRight)
-			{
-				//m_pPlayer->setAnimationState(PLAYER_IDLE_RIGHT);
-			}
-			else
-			{
-				//m_pPlayer->setAnimationState(PLAYER_IDLE_LEFT);
-			}
+			m_pBrick->stopMovement();
 		}
 	}
-
 
 	if (EventManager::Instance().isKeyDown(SDL_SCANCODE_ESCAPE))
 	{
@@ -119,12 +126,37 @@ void Sim2Scene::handleEvents()
 
 void Sim2Scene::start()
 {
-
 	//Load Background and Textures 
 	TextureManager::Instance()->load("../Assets/textures/Sim2_Background.png", "Sim2Screen");
 
 	// Set GUI Title
 	m_guiTitle = "Play Scene";
+
+	//Game Objects 
+	m_pBall = new Ball();
+	addChild(m_pBall);
+
+	m_pBrick = new Brick();
+	addChild(m_pBrick);
+
+	
+
+	leftBorder = new Border(glm::vec2(100, 120), 2, 600);
+	rightBorder = new Border(glm::vec2(700, 120), 2, 600);
+	topBorder = new Border(glm::vec2(0, 120), 600, 2);
+	bottomBorder = new Border(glm::vec2(0, 600), 1000, 2);
+
+	addChild(leftBorder);
+	addChild(rightBorder);
+	addChild(topBorder);
+	addChild(bottomBorder);
+	
+	borders.push_back(leftBorder);
+	borders.push_back(rightBorder);
+	borders.push_back(bottomBorder);
+	borders.push_back(topBorder);
+	
+
 
 
 	/* Instructions Label */
@@ -170,6 +202,8 @@ void Sim2Scene::GUI_Function() const
 	{
 		
 	}
+
+	ImGui::Text("Ball Velocity : ");
 
 	
 

@@ -1,31 +1,31 @@
-#include "Player.h"
+#include "Brick.h"
 #include "TextureManager.h"
 
-Player::Player()
-{
-	TextureManager::Instance()->load("../Assets/textures/wookie.png", "Wookie");
 
-	getTransform()->position = glm::vec2(400.0f, 500.0f);
+Brick::Brick()
+{
+	TextureManager::Instance()->load("../Assets/textures/Brick.png", "Brick");
+
+	getTransform()->position = glm::vec2(400.0f, 520.0f);
 	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->acceleration = glm::vec2(0.0f, 0.0f);
 	getRigidBody()->isColliding = false;
 	setType(PLAYER);
 }
 
-Player::~Player()
+Brick::~Brick()
 = default;
 
-void Player::draw()
+
+void Brick::draw()
 {
-	// alias for x and y
 	const auto x = getTransform()->position.x;
 	const auto y = getTransform()->position.y;
 
-	TextureManager::Instance()->draw("Wookie", x, y, 0, 255, true);
-	
+	TextureManager::Instance()->draw("Brick", x, y, 0, 255, true);
 }
 
-void Player::update()
+void Brick::update()
 {
 	
 
@@ -36,27 +36,24 @@ void Player::update()
 	getTransform()->position = pos;
 }
 
-void Player::clean()
+void Brick::clean()
 {
+
 
 }
 
-void Player::moveLeft() {
+void Brick::moveLeft()
+{
 	getRigidBody()->velocity = glm::vec2(-SPEED, 0.0f);
 }
 
-void Player::moveRight() {
+void Brick::moveRight()
+{
 	getRigidBody()->velocity = glm::vec2(SPEED, 0.0f);
 }
 
-void Player::moveUp() {
-	getRigidBody()->velocity = glm::vec2(0.0f, -SPEED);
-}
-
-void Player::moveDown() {
-	getRigidBody()->velocity = glm::vec2(0.0f, SPEED);
-}
-
-void Player::stopMovement() {
+void Brick::stopMovement()
+{
 	getRigidBody()->velocity = glm::vec2(0.0f, 0.0f);
 }
+

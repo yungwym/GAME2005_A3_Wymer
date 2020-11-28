@@ -7,8 +7,9 @@
 #include "Label.h"
 
 //Game Objects
-#include "Crate.h"
-#include "Triangle.h"
+#include "Ball.h"
+#include "Brick.h"
+#include "Border.h"
 
 class Sim2Scene : public Scene
 {
@@ -36,9 +37,23 @@ private:
 	
 	bool m_playerFacingRight;
 
+	//Game Objects
+	Brick* m_pBrick;
+	Ball* m_pBall;
+
 	// UI Items
 	Button* m_pReturnButton;
 	Label* m_pInstructionsLabel;
+
+	const float deltaTime = 1.0 / 300.0f;
+
+	//Borders 
+	Border* leftBorder;
+	Border* rightBorder;
+	Border* topBorder;
+	Border* bottomBorder;
+
+	std::vector<Border*> borders;
 
 };
 

@@ -162,6 +162,8 @@
     <ClCompile Include="..\include\IMGUI\imgui_widgets.cpp" />
     <ClCompile Include="..\include\IMGUI_SDL\imgui_sdl.cpp" />
     <ClCompile Include="..\src\Ball.cpp" />
+    <ClCompile Include="..\src\Border.cpp" />
+    <ClCompile Include="..\src\Brick.cpp" />
     <ClCompile Include="..\src\Button.cpp" />
     <ClCompile Include="..\src\CollisionManager.cpp" />
     <ClCompile Include="..\src\InstructScene.cpp" />
@@ -202,6 +204,8 @@
     <ClInclude Include="..\include\IMGUI_SDL\imgui_sdl.h" />
     <ClInclude Include="..\src\Animation.h" />
     <ClInclude Include="..\src\Ball.h" />
+    <ClInclude Include="..\src\Border.h" />
+    <ClInclude Include="..\src\Brick.h" />
     <ClInclude Include="..\src\Button.h" />
     <ClInclude Include="..\src\CollisionManager.h" />
     <ClInclude Include="..\src\CollisionShape.h" />

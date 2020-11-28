@@ -1,15 +1,16 @@
 #pragma once
-#ifndef __PLAYER__
-#define __PLAYER__
+#ifndef __BRICK__
+#define __BRICK__
 
-#include "PlayerAnimationState.h"
 #include "Sprite.h"
 
-class Player final : public Sprite
+
+class Brick : public Sprite
 {
+
 public:
-	Player();
-	~Player();
+	Brick();
+	~Brick();
 
 	// Life Cycle Methods
 	virtual void draw() override;
@@ -18,15 +19,14 @@ public:
 
 	void moveLeft();
 	void moveRight();
-	void moveUp();
-	void moveDown();
 
 	void stopMovement();
 
 private:
-
 	const float SPEED = 150.0f;
-	const float deltaTime = 1.0f / 60.f;
+
+	const float deltaTime = 1.0f / 60.0f; 
+
 };
 
-#endif /* defined (__PLAYER__) */
+#endif // !__BRICK__
